@@ -1,0 +1,6 @@
+{
+  "autoseed" : true,
+  "farm" : true,
+  "security_type" : "friends",
+  "cookie-secret" : "not-very-secret"
+}

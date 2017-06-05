@@ -1,0 +1,42 @@
+version: "2.2"
+
+services:
+  proxy:
+    build:
+      context: ./proxy
+    init: true
+    volumes:
+      - proxy:/etc/proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DROPLET: ${DROPLET}
+      CADDYPATH: /etc/proxy
+    command:
+      --conf
+      /etc/proxy/Caddyfile
+      --log
+      stdout
+      --ca
+      https://acme-staging.api.letsencrypt.org/directory
+      --agree
+      --email
+      ${LE_EMAIL}
+  web:
+    build:
+      context: ./web
+    init: true
+    ports:
+      - "3000:3000"
+      - "4000:4000"
+    volumes:
+      - dot-wiki:/home/app/.wiki
+
+volumes:
+  dot-wiki:
+    external:
+      name: wiki.$DROPLET
+  proxy:
+    external:
+      name: proxy.$DROPLET
