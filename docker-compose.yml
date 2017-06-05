@@ -18,8 +18,6 @@ services:
       /etc/proxy/Caddyfile
       --log
       stdout
-      --ca
-      https://acme-staging.api.letsencrypt.org/directory
       --agree
       --email
       ${LE_EMAIL}
