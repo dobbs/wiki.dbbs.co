@@ -57,13 +57,11 @@ create-named-volumes() {
 open-portal-to-named-volumes() {
     docker run --name ping -d \
            -v proxy.$DROPLET:/proxy \
-           -v wiki.$DROPLET:/dot-wiki \
            buildpack-deps:jessie-curl ping -i 60 localhost
 }
 
 install-configs-in-named-volumes() {
     cd $COMPOSE_DIR
-    docker cp dot-wiki/config.json ping:/dot-wiki/config.json
     docker cp proxy/Caddyfile ping:/proxy/Caddyfile
     docker-compose run --rm --user root web chown -R app:app .wiki
 }
