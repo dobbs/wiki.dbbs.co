@@ -12,7 +12,7 @@ https://*.wiki.dbbs.co,
 http://*.wiki.dbbs.co:80
 gzip
 tls {
-  max_certs 3
+  max_certs 4
 }
 proxy / farm:3000 {
   transparent
