@@ -2,10 +2,12 @@ version: "2.2"
 
 services:
   proxy:
-    image: dobbs/proxy:latest
+    image: dobbs/proxy:in-production
     init: true
     volumes:
       - proxy:/etc/proxy
+      - proxy.d:/etc/proxy.d
+      - proxy.certs:/etc/proxy.certs
     ports:
       - "80:80"
       - "443:443"
@@ -41,3 +43,9 @@ volumes:
   proxy:
     external:
       name: proxy.$DROPLET
+  proxy.d:
+    external:
+      name: proxy.d.$DROPLET
+  proxy.certs:
+    external:
+      name: proxy.certs.$DROPLET
