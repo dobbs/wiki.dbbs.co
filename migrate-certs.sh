@@ -6,7 +6,7 @@ readonly COMPOSE_DIR=$( cd $(dirname $0); pwd )
 
 main() {
     create-environment $@
-    copy-certs-to-new-home
+    remove-certs-from-old-home
 }
 
 create-environment() {
@@ -16,7 +16,7 @@ create-environment() {
     eval $(docker-machine env $DROPLET)
 }
 
-copy-certs-to-new-home() {
+remove-certs-from-old-home() {
     docker run \
            --rm \
            -v proxy.$DROPLET:/proxy \
@@ -24,9 +24,7 @@ copy-certs-to-new-home() {
            -v proxy.certs.$DROPLET:/proxy.certs \
            --entrypoint=/bin/sh \
            dobbs/proxy:0.10.10 \
-           -c '\
-cp -Rp /proxy/acme /proxy.certs/acme;\
-cp -Rp /proxy/ocsp /proxy.certs/ocsp;'
+           -c 'rm -rf /proxy/acme /proxy/ocsp'
 }
 
 main $@
