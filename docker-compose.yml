@@ -2,7 +2,7 @@ version: "2.2"
 
 services:
   proxy:
-    image: dobbs/proxy:in-production
+    image: dobbs/proxy:0.10.10
     init: true
     volumes:
       - proxy:/etc/proxy
@@ -12,7 +12,7 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      CADDYPATH: /etc/proxy
+      CADDYPATH: /etc/proxy.certs
     command:
       --conf
       /etc/proxy/Caddyfile
