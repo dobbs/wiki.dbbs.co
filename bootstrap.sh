@@ -8,12 +8,6 @@ main() {
     create-droplet-floating-ip
     create-fqdn
     create-wildcard-cname
-
-    create-docker-environment
-    create-named-volumes
-    open-portal-to-named-volumes
-    install-configs-in-named-volumes
-    close-portal-to-named-volumes
 }
 
 create-environment() {
@@ -43,31 +37,6 @@ create-droplet-floating-ip() {
                -d "{\"droplet_id\":$ID}" \
                "https://api.digitalocean.com/v2/floating_ips"
     }
-}
-
-create-docker-environment() {
-    eval $(docker-machine env $DROPLET)
-}
-
-create-named-volumes() {
-    docker volume create --name proxy.$DROPLET
-    docker volume create --name wiki.$DROPLET
-}
-
-open-portal-to-named-volumes() {
-    docker run --name ping -d \
-           -v proxy.$DROPLET:/proxy \
-           buildpack-deps:jessie-curl ping -i 60 localhost
-}
-
-install-configs-in-named-volumes() {
-    cd $COMPOSE_DIR
-    docker cp proxy/Caddyfile ping:/proxy/Caddyfile
-    docker-compose run --rm --user root web chown -R app:app .wiki
-}
-
-close-portal-to-named-volumes() {
-    docker rm -f ping
 }
 
 create-fqdn() {
