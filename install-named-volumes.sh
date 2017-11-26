@@ -47,6 +47,8 @@ open-portal-to-named-volumes() {
 install-configs-in-named-volumes() {
     cd $COMPOSE_DIR
     docker cp Caddyfile portal:/proxy/Caddyfile
+    docker cp image-transporter.caddyfile \
+           portal:/proxy.d/
     docker exec portal \
            sh -c 'chown -R caddy:nogroup /proxy /proxy.d /proxy.certs'
     docker-compose run --rm --user root farm chown -R app:app .wiki

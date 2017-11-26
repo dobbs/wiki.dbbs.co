@@ -1,10 +1,4 @@
-https://image-transporter.wiki.dbbs.co,
-http://image-transporter.wiki.dbbs.co {
-  gzip
-  proxy / images:4010 {
-    transparent
-  }
-}
+import /etc/proxy.d/*.caddyfile
 
 https://wiki.dbbs.co,
 http://wiki.dbbs.co,
@@ -12,7 +6,7 @@ https://*.wiki.dbbs.co,
 http://*.wiki.dbbs.co:80
 gzip
 tls {
-  max_certs 4
+  max_certs {$MAX_CERTS}
 }
 proxy / farm:3000 {
   transparent

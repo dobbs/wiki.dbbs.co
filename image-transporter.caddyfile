@@ -1,0 +1,7 @@
+https://image-transporter.wiki.dbbs.co,
+http://image-transporter.wiki.dbbs.co {
+  gzip
+  proxy / images:4010 {
+    transparent
+  }
+}
