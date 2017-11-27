@@ -12,7 +12,7 @@ services:
       - "443:443"
     environment:
       CADDYPATH: /etc/proxy
-      MAX_CERTS: 4
+      MAX_CERTS: 6
     command:
       --conf
       /etc/proxy/Caddyfile

@@ -3,7 +3,9 @@ import /etc/proxy.d/*.caddyfile
 https://wiki.dbbs.co,
 http://wiki.dbbs.co,
 https://*.wiki.dbbs.co,
-http://*.wiki.dbbs.co:80
+http://*.wiki.dbbs.co:80,
+https://*.*.wiki.dbbs.co,
+http://*.*.wiki.dbbs.co:80
 gzip
 tls {
   max_certs {$MAX_CERTS}
