@@ -7,12 +7,11 @@ services:
     volumes:
       - proxy:/etc/proxy
       - proxy.d:/etc/proxy.d
-      - proxy.certs:/etc/proxy.certs
     ports:
       - "80:80"
       - "443:443"
     environment:
-      CADDYPATH: /etc/proxy.certs
+      CADDYPATH: /etc/proxy
       MAX_CERTS: 4
     command:
       --conf
@@ -47,6 +46,3 @@ volumes:
   proxy.d:
     external:
       name: proxy.d.$DROPLET
-  proxy.certs:
-    external:
-      name: proxy.certs.$DROPLET

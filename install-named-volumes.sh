@@ -26,7 +26,6 @@ create-docker-environment() {
 create-named-volumes() {
     docker volume create --name proxy.$DROPLET
     docker volume create --name proxy.d.$DROPLET
-    docker volume create --name proxy.certs.$DROPLET
     docker volume create --name wiki.$DROPLET
 }
 
@@ -37,7 +36,6 @@ open-portal-to-named-volumes() {
            --init=true \
            -v proxy.$DROPLET:/proxy \
            -v proxy.d.$DROPLET:/proxy.d \
-           -v proxy.certs.$DROPLET:/proxy.certs \
            --user=root \
            --entrypoint=/usr/bin/tail \
            dobbs/proxy:0.10.10 \
@@ -50,7 +48,7 @@ install-configs-in-named-volumes() {
     docker cp image-transporter.caddyfile \
            portal:/proxy.d/
     docker exec portal \
-           sh -c 'chown -R caddy:nogroup /proxy /proxy.d /proxy.certs'
+           sh -c 'chown -R caddy:nogroup /proxy /proxy.d'
     docker-compose run --rm --user root farm chown -R app:app .wiki
 }
 
