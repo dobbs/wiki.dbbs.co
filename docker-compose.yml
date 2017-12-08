@@ -2,7 +2,7 @@ version: "2.2"
 
 services:
   proxy:
-    image: dobbs/proxy:0.10.10
+    image: dobbs/proxy:0.10.10-certs
     init: true
     volumes:
       - proxy:/etc/proxy
@@ -35,6 +35,12 @@ services:
     image: dobbs/image-transporter
     init: true
     restart: on-failure
+  apparatus:
+    image: dobbs/apparatus
+    init: true
+    restart: on-failure
+    volumes:
+      - apparatus-saves:/src/saves
 
 volumes:
   dot-wiki:
@@ -46,3 +52,6 @@ volumes:
   proxy.d:
     external:
       name: proxy.d.$DROPLET
+  apparatus-saves:
+    external:
+      name: apparatus-saves.$DROPLET
