@@ -1,5 +1,6 @@
 #!/bin/bash -eu
 set -o pipefail
+IFS=$'\t\n\r'
 
 readonly COMPOSE_DIR=$( cd $(dirname $0); pwd )
 
@@ -88,11 +89,37 @@ fqdn-exists() {
 }
 
 wildcard-cname-exists() {
+    list-cnames \
+        | grep -q '^*'
+}
+
+list-cnames() {
     do-api -sS -X GET \
            "https://api.digitalocean.com/v2/domains/${DROPLET}/records" \
         | jq -r '.domain_records[] | select(.type == "CNAME") | .name, .data' \
-        | paste - - \
-        | grep -q '^*'
+        | paste - -
+}
+
+create-cname() {
+    local SUBDOMAIN="${1:-*}"
+    cname-exists $SUBDOMAIN || {
+        local URL="https://api.digitalocean.com/v2/domains/${DROPLET}/records"
+        do-api -X POST -d@- $URL <<EOF
+{
+  "type" : "CNAME",
+  "name" : "$SUBDOMAIN",
+  "data" : "@",
+  "priority" : null,
+  "port" : null,
+  "weight" : null
+}
+EOF
+    }
+}
+
+cname-exists() {
+    local SUBDOMAIN="${1:-UNSPECIFIED}"
+    list-cnames | grep -q "^$SUBDOMAIN"
 }
 
 do-api() {
@@ -107,7 +134,14 @@ token() {
 }
 
 case ${1:-} in
-    create-droplet|create-droplet-floating-ip|create-fqdn|create-wildcard-cname|wildcard-cname-exists)
+    list-cnames \
+    | create-cname \
+    | create-droplet \
+    | create-droplet-floating-ip \
+    | create-fqdn \
+    | create-wildcard-cname \
+    | wildcard-cname-exists \
+    )
         readonly CMD=${1}
         shift
     ;;
@@ -116,5 +150,5 @@ case ${1:-} in
     ;;
 esac
 
-create-environment $@
-$CMD
+create-environment
+$CMD $@
