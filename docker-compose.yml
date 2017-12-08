@@ -14,6 +14,7 @@ services:
       CADDYPATH: /etc/proxy
       MAX_CERTS: 6
     command:
+      /usr/bin/caddy
       --conf
       /etc/proxy/Caddyfile
       --log
