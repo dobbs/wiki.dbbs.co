@@ -2,7 +2,7 @@ version: "2.2"
 
 services:
   proxy:
-    image: dobbs/proxy:0.10.11
+    image: dobbs/proxy:0.10.12
     init: true
     volumes:
       - proxy:/etc/proxy
@@ -24,7 +24,7 @@ services:
       ${LE_EMAIL}
     restart: on-failure
   farm:
-    image: dobbs/farm:0.14.0-frame
+    image: dobbs/farm:0.14.0
     init: true
     volumes:
       - dot-wiki:/home/app/.wiki
