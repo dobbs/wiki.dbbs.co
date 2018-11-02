@@ -13,6 +13,9 @@ services:
     environment:
       CADDYPATH: /etc/proxy
       MAX_CERTS: 7
+      AUTH_DOMAIN: $AUTH_DOMAIN
+      AUTH_NAME: $AUTH_NAME
+      AUTH_PASS: $AUTH_PASS
     command:
       /usr/bin/caddy
       --conf

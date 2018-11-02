@@ -1,0 +1,8 @@
+https://{$AUTH_DOMAIN},
+http://{$AUTH_DOMAIN} {
+  gzip
+  basicauth / {$AUTH_NAME} {$AUTH_PASS}
+  proxy / farm:3000 {
+    transparent
+  }
+}
