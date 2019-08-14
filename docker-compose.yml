@@ -12,7 +12,7 @@ services:
       - "443:443"
     environment:
       CADDYPATH: /etc/proxy
-      MAX_CERTS: 7
+      MAX_CERTS: 9
       AUTH_DOMAIN: $AUTH_DOMAIN
       AUTH_NAME: $AUTH_NAME
       AUTH_PASS: $AUTH_PASS
@@ -27,7 +27,7 @@ services:
       ${LE_EMAIL}
     restart: on-failure
   farm:
-    image: dobbs/farm:0.50.1
+    image: dobbs/farm:0.52.0
     init: true
     volumes:
       - dot-wiki:/home/app/.wiki
