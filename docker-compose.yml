@@ -27,13 +27,10 @@ services:
       ${LE_EMAIL}
     restart: on-failure
   farm:
-    image: dobbs/farm:0.52.0
+    image: dobbs/farm:1.0.3
     init: true
     volumes:
-      - dot-wiki:/home/app/.wiki
-    environment:
-      DOMAIN: wiki.dbbs.co
-      COOKIE: secure
+      - dot-wiki:/home/node/.wiki
     restart: on-failure
   images:
     image: dobbs/image-transporter
