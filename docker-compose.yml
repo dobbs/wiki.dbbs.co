@@ -12,7 +12,7 @@ services:
       - "443:443"
     environment:
       CADDYPATH: /etc/proxy
-      MAX_CERTS: 13
+      MAX_CERTS: 14
       AUTH_DOMAIN: $AUTH_DOMAIN
       AUTH_NAME: $AUTH_NAME
       AUTH_PASS: $AUTH_PASS
