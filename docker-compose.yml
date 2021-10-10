@@ -27,7 +27,7 @@ services:
       ${LE_EMAIL}
     restart: on-failure
   farm:
-    image: dobbs/farm:1.0.10
+    image: dobbs/farm:1.0.11
     init: true
     volumes:
       - dot-wiki:/home/node/.wiki
