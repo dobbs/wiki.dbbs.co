@@ -1,30 +1,21 @@
 version: "2.2"
 
 services:
-  proxy:
-    image: dobbs/proxy:0.10.12
+  caddy:
+    image: caddy:2.7
     init: true
     volumes:
-      - proxy:/etc/proxy
-      - proxy.d:/etc/proxy.d
+      - $PWD/Caddyfile2:/etc/caddy/Caddyfile
+      - $PWD/caddy/data:/data
+      - $PWD/caddy/config:/config
     ports:
       - "80:80"
       - "443:443"
     environment:
-      CADDYPATH: /etc/proxy
-      MAX_CERTS: 14
+      LE_EMAIL: $LE_EMAIL
       AUTH_DOMAIN: $AUTH_DOMAIN
       AUTH_NAME: $AUTH_NAME
       AUTH_PASS: $AUTH_PASS
-    command:
-      /usr/bin/caddy
-      --conf
-      /etc/proxy/Caddyfile
-      --log
-      stdout
-      --agree
-      --email
-      ${LE_EMAIL}
     restart: on-failure
   farm:
     image: dobbs/farm:1.0.16

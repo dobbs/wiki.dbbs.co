@@ -1,0 +1,52 @@
+{
+  auto_https disable_redirects
+  email {$LE_EMAIL}
+}
+
+https://begin.wiki.dbbs.co,
+https://code.wiki.dbbs.co,
+https://earth.wiki.dbbs.co,
+https://frame.wiki.dbbs.co,
+https://fwf.wiki.dbbs.co,
+https://goals.pods.wiki.dbbs.co,
+https://lfi.wiki.dbbs.co,
+https://local-farm.wiki.dbbs.co,
+https://observable.wiki.dbbs.co,
+https://resume.wiki.dbbs.co,
+https://sketch.wiki.dbbs.co,
+https://tge.wiki.dbbs.co,
+https://wiki.dbbs.co,
+http://begin.wiki.dbbs.co,
+http://code.wiki.dbbs.co,
+http://earth.wiki.dbbs.co,
+http://frame.wiki.dbbs.co,
+http://fwf.wiki.dbbs.co,
+http://goals.pods.wiki.dbbs.co,
+http://lfi.wiki.dbbs.co,
+http://local-farm.wiki.dbbs.co,
+http://observable.wiki.dbbs.co,
+http://resume.wiki.dbbs.co,
+http://sketch.wiki.dbbs.co,
+http://tge.wiki.dbbs.co,
+http://wiki.dbbs.co
+{
+  encode gzip
+  reverse_proxy farm:3000
+}
+https://{$AUTH_DOMAIN}
+{
+  basicauth /* {
+    {$AUTH_NAME} {$AUTH_PASS}
+  }
+  reverse_proxy farm:3000
+}
+https://apparatus.wiki.dbbs.co,
+http://apparatus.wiki.dbbs.co {
+  encode gzip
+  reverse_proxy apparatus:2015
+}
+https://image-transporter.wiki.dbbs.co,
+http://image-transporter.wiki.dbbs.co {
+  encode gzip
+  reverse_proxy images:4010
+}
