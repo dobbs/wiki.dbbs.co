@@ -18,7 +18,7 @@ services:
       AUTH_PASS: $AUTH_PASS
     restart: on-failure
   farm:
-    image: dobbs/farm:1.0.23
+    image: dobbs/farm:1.0.24
     init: true
     volumes:
       - dot-wiki:/home/node/.wiki
