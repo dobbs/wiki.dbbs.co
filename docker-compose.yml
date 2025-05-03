@@ -6,6 +6,7 @@ services:
     init: true
     volumes:
       - $PWD/Caddyfile2:/etc/caddy/Caddyfile
+      - $PWD/elliottdobbs.com:/srv
       - $PWD/caddy/data:/data
       - $PWD/caddy/config:/config
     ports:
@@ -18,7 +19,7 @@ services:
       AUTH_PASS: $AUTH_PASS
     restart: on-failure
   farm:
-    image: dobbs/farm:1.0.28
+    image: dobbs/farm:1.1.0
     init: true
     volumes:
       - dot-wiki:/home/node/.wiki
