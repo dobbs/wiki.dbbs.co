@@ -1,0 +1,55 @@
+#!/bin/bash
+set -euo pipefail
+ITS=$'\n\r\t'
+
+readonly COMPOSE_DIR=$( cd $(dirname $0); cd ..; pwd )
+
+usage() {
+  cat <<EOF
+Usage: $(basename $0) COMMAND
+
+COMMAND options:
+  list-wikis
+  tarball WIKI
+
+EOF
+  exit 1
+}
+
+list-wikis() {
+  ssh wiki.dbbs.co bash <<EOF
+  cd wiki.dbbs.co
+  docker-compose run --rm -T -w /home/node/.wiki farm \
+    ls -1 | egrep -v '(commons|.json$)'
+EOF
+}
+
+tarball() {
+  readonly WIKI=${2:-UNSPECIFIED}
+  readonly FILE=$WIKI-$(date -I).tgz
+
+  if [ "$WIKI" == "UNSPECIFIED" ]; then
+    usage
+  fi
+
+  > $FILE ssh wiki.dbbs.co bash <<EOF
+  cd wiki.dbbs.co
+  > /dev/stdout docker-compose run --rm -T -w /home/node/.wiki/$WIKI farm tar zcf - .
+EOF
+
+  ls -l $FILE
+}
+
+case ${1:-} in
+  list-wikis \
+    | tarball \
+    )
+    readonly CMD=${1}
+    ;;
+
+  *)
+    readonly CMD=usage
+    ;;
+esac
+
+$CMD $@
